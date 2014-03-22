@@ -1,0 +1,98 @@
+<!DOCTYPE html>  <html> <head>   <title>utility.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="admin_interface.html">                 admin_interface.coffee               </a>                                           <a class="source" href="db_interface.html">                 db_interface.coffee               </a>                                           <a class="source" href="utility.html">                 utility.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               utility.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.paths = </span><span class="nx">module</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">paths</span>
+
+<span class="nv">Crypto = </span><span class="nx">require</span> <span class="s">&#39;crypto&#39;</span>
+<span class="nv">Fs     = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
+
+<span class="nv">Colors = </span><span class="nx">require</span> <span class="s">&#39;colors&#39;</span>
+
+<span class="nx">Colors</span><span class="p">.</span><span class="nx">setTheme</span>
+  <span class="s">&#39;positive&#39;</span> <span class="o">:</span> <span class="s">&#39;green&#39;</span>
+  <span class="s">&#39;ordinary&#39;</span> <span class="o">:</span> <span class="s">&#39;yellow&#39;</span>
+  <span class="s">&#39;critical&#39;</span> <span class="o">:</span> <span class="s">&#39;red&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>Global functions</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">global.log = </span><span class="nf">(message, code, error) -&gt;</span>
+  <span class="nv">f = </span><span class="nf">(value) -&gt;</span>
+    <span class="k">return</span> <span class="nx">value</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">and</span> <span class="s">&quot;0</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span> <span class="o">or</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span>
+
+  <span class="nv">actualTime = </span><span class="nf">(d = new Date) -&gt;</span>
+    <span class="nv">date = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">f</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">f</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getDate</span><span class="p">())</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">d</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nv">time = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">f</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getHours</span><span class="p">())</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">f</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">())</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">f</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">())</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="k">return</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">date</span><span class="si">}</span><span class="s"> </span><span class="si">#{</span><span class="nx">time</span><span class="si">}</span><span class="s">&quot;</span>
+
+  <span class="nv">space = </span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">..</span><span class="mi">19</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="o">-&gt;</span> <span class="s">&#39; &#39;</span><span class="p">).</span><span class="nx">join</span> <span class="s">&#39;&#39;</span>
+
+  <span class="k">if</span> <span class="k">typeof</span> <span class="nx">code</span> <span class="o">isnt</span> <span class="s">&#39;undefined&#39;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;|</span><span class="si">#{</span><span class="nx">actualTime</span><span class="p">()[</span><span class="nx">code</span><span class="p">]</span><span class="si">}</span><span class="s">| </span><span class="si">#{</span><span class="nx">message</span><span class="p">[</span><span class="nx">code</span><span class="p">]</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;|</span><span class="si">#{</span><span class="nx">space</span><span class="p">()</span><span class="si">}</span><span class="s">| </span><span class="si">#{</span><span class="nx">error</span><span class="p">.</span><span class="nx">toString</span><span class="p">()[</span><span class="nx">code</span><span class="p">]</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">error</span>
+  <span class="k">else</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;|</span><span class="si">#{</span><span class="nx">actualTime</span><span class="p">()</span><span class="si">}</span><span class="s">| </span><span class="si">#{</span><span class="nx">message</span><span class="si">}</span><span class="s">&quot;</span>
+
+<span class="nv">global.rlog = </span><span class="nf">(data) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">data</span>
+
+<span class="nb">Number</span><span class="o">::</span><span class="nv">times = </span><span class="nf">(iterator) -&gt;</span>
+  <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">...</span><span class="nx">@</span><span class="p">]</span>
+    <span class="nx">iterator</span> <span class="nx">i</span>
+
+<span class="nv">responseFile = </span><span class="nf">(path, response) -&gt;</span>
+  <span class="nx">Fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="nx">path</span><span class="p">,</span> <span class="nf">(error, data) -&gt;</span>
+    <span class="k">if</span> <span class="nx">error</span>
+      <span class="nx">log</span> <span class="s">&quot;Error reading file: </span><span class="si">#{</span><span class="nx">path</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&#39;ordinary&#39;</span>
+      <span class="k">return</span>
+
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span> <span class="nx">data</span>
+
+<span class="nv">Utility =</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Http</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">responseFile : </span><span class="nf">(path, response) -&gt;</span>
+    <span class="nx">responseFile</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="nv">responseText : </span><span class="nf">(text, response) -&gt;</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">end</span> <span class="nx">text</span>
+
+  <span class="nv">responseResource : </span><span class="nf">(path, request, response) -&gt;</span>
+    <span class="nx">Fs</span><span class="p">.</span><span class="nx">stat</span> <span class="nx">path</span><span class="p">,</span> <span class="nf">(error, stats) -&gt;</span>
+      <span class="k">if</span> <span class="nx">error</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span> <span class="mi">302</span><span class="p">,</span>
+          <span class="s">&#39;location&#39;</span> <span class="o">:</span> <span class="s">&#39;/404&#39;</span>
+
+        <span class="nx">do</span> <span class="nx">response</span><span class="p">.</span><span class="nx">end</span>
+
+        <span class="nx">log</span> <span class="s">&quot;HTTP: Unknown resource — </span><span class="si">#{</span><span class="nx">path</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&#39;ordinary&#39;</span>
+
+        <span class="k">return</span>
+
+      <span class="nv">modified = </span><span class="kc">true</span>
+
+      <span class="k">try</span>
+        <span class="nv">clientTime = </span><span class="k">new</span> <span class="nb">Date</span> <span class="nx">request</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s">&#39;if-modified-since&#39;</span><span class="p">]</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;last-modified&#39;</span><span class="p">,</span> <span class="nx">stats</span><span class="p">.</span><span class="nx">mtime</span>
+
+        <span class="k">if</span> <span class="nx">clientTime</span> <span class="o">&gt;=</span> <span class="nx">stats</span><span class="p">.</span><span class="nx">mtime</span>
+          <span class="nv">modified = </span><span class="kc">false</span>
+
+      <span class="k">catch</span> <span class="nx">exception</span>
+        <span class="nx">log</span> <span class="nx">exception</span>
+
+      <span class="k">if</span> <span class="nx">modified</span>
+        <span class="nv">response.statusCode = </span><span class="mi">200</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;last-modified&#39;</span><span class="p">,</span> <span class="nx">stats</span><span class="p">.</span><span class="nx">mtime</span>
+
+        <span class="nx">responseFile</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">response</span>
+      <span class="k">else</span>
+        <span class="nv">response.statusCode = </span><span class="mi">304</span>
+
+        <span class="nx">do</span> <span class="nx">response</span><span class="p">.</span><span class="nx">end</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Crypto</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">encrypt : </span><span class="nf">(data) -&gt;</span>
+    <span class="k">return</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s">&#39;sha1&#39;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s">&#39;hex&#39;</span><span class="p">)</span>
+
+  <span class="nv">generateId : </span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">@encrypt</span> <span class="k">new</span> <span class="nb">Date</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span>
+
+  <span class="nv">version : </span><span class="nf">(path, callback) -&gt;</span>
+    <span class="nx">Fs</span><span class="p">.</span><span class="nx">stat</span> <span class="nx">path</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">stats</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">callback</span> <span class="nx">@encrypt</span> <span class="nx">stats</span><span class="p">.</span><span class="nx">mtime</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+  <span class="nv">hash : </span><span class="nf">(data, key) -&gt;</span>
+    <span class="k">return</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">createHmac</span><span class="p">(</span><span class="s">&#39;sha1&#39;</span><span class="p">,</span> <span class="nx">key</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">data</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s">&#39;hex&#39;</span><span class="p">)</span>
+
+<span class="nv">module.exports = </span><span class="nx">Utility</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

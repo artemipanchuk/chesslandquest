@@ -1,0 +1,19 @@
+<section class = "market-units big dialog">
+	<section>
+		<table>
+			<tr>
+				<td>Rank</td>
+				<td>Price</td>
+			</tr>
+
+			<% for (unit in units) { %>
+			<tr id = <%=unit%>>
+				<td class = "unit-item"><%=unit.ucfirst()%></td>
+				<td><%=units[unit].stats.points%></td>
+			</tr>
+			<% } %>
+		</table>
+	</section>
+
+	<button class = "close">Close</button>
+</section>

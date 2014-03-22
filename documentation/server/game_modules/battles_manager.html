@@ -1,0 +1,50 @@
+<!DOCTYPE html>  <html> <head>   <title>battles_manager.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="battles_manager.html">                 battles_manager.coffee               </a>                                           <a class="source" href="game_server.html">                 game_server.coffee               </a>                                           <a class="source" href="locations_manager.html">                 locations_manager.coffee               </a>                                           <a class="source" href="non_player_characters_manager.html">                 non_player_characters_manager.coffee               </a>                                           <a class="source" href="player_characters_manager.html">                 player_characters_manager.coffee               </a>                                           <a class="source" href="units_manager.html">                 units_manager.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               battles_manager.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>
+
+<h1>Battles Manager</h1>
+
+<h3>Manages battles</h3>
+
+<h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.paths = </span><span class="nx">module</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">paths</span>
+
+<span class="nv">Ut = </span><span class="nx">require</span> <span class="s">&#39;utility&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Fighting characters</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">pcs  = </span><span class="p">[]</span>
+<span class="nv">npcs = </span><span class="p">[]</span>
+
+<span class="nv">battles = </span><span class="p">{}</span>
+
+<span class="nv">waiting = </span><span class="p">{}</span>
+
+<span class="nv">exports =</span>
+  <span class="nv">addWaiter : </span><span class="nf">(who, whom) -&gt;</span>
+    <span class="nx">waiting</span><span class="p">[</span><span class="nx">who</span><span class="p">]</span> <span class="o">=</span> <span class="nx">whom</span>
+
+  <span class="nv">getWaiter : </span><span class="nf">(who) -&gt;</span>
+    <span class="nv">target = </span><span class="nx">waiting</span><span class="p">[</span><span class="nx">who</span><span class="p">]</span> <span class="o">or</span> <span class="kc">null</span>
+
+    <span class="k">delete</span> <span class="nx">waiting</span><span class="p">[</span><span class="nx">who</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nx">target</span>
+
+  <span class="nv">checkWaiter : </span><span class="nf">(name) -&gt;</span>
+    <span class="k">return</span> <span class="nx">waiting</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
+
+  <span class="nv">createBattleWithNPC : </span><span class="nf">(pc, npc) -&gt;</span>
+    <span class="k">if</span> <span class="nx">pc</span><span class="p">.</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">pcs</span> <span class="o">or</span> <span class="nx">npc</span><span class="p">.</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">npcs</span>
+      <span class="k">return</span> <span class="kc">false</span>
+
+    <span class="nv">size = </span><span class="p">(</span><span class="nx">pc</span><span class="p">.</span><span class="nx">army</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">npc</span><span class="p">.</span><span class="nx">army</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
+
+    <span class="nv">battle = </span><span class="nx">battles</span><span class="p">[</span><span class="nx">Ut</span><span class="p">.</span><span class="nx">generateId</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span><span class="nx">size</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">battle</span>
+
+  <span class="nv">createBattleWithPC  : </span><span class="nf">(pc, opc) -&gt;</span>
+    <span class="k">if</span> <span class="nx">pc</span><span class="p">.</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">pcs</span> <span class="o">or</span> <span class="nx">npc</span><span class="p">.</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">npcs</span>
+      <span class="k">return</span> <span class="kc">false</span>
+
+    <span class="nv">size = </span><span class="p">(</span><span class="nx">pc</span><span class="p">.</span><span class="nx">army</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="nx">npc</span><span class="p">.</span><span class="nx">army</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
+
+    <span class="nv">battle = </span><span class="nx">all</span><span class="p">[</span><span class="nx">Ut</span><span class="p">.</span><span class="nx">generateId</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span><span class="nx">size</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">battle</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.exports = </span><span class="nx">exports</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

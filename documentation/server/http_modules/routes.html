@@ -1,0 +1,258 @@
+<!DOCTYPE html>  <html> <head>   <title>routes.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="accounts_manager.html">                 accounts_manager.coffee               </a>                                           <a class="source" href="form_parser.html">                 form_parser.coffee               </a>                                           <a class="source" href="http_server.html">                 http_server.coffee               </a>                                           <a class="source" href="router.html">                 router.coffee               </a>                                           <a class="source" href="routes.html">                 routes.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               routes.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>
+
+<h1>Routes</h1>
+
+<h3>Provides request handlers</h3>
+
+<h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.paths = </span><span class="nx">module</span><span class="p">.</span><span class="nx">parent</span><span class="p">.</span><span class="nx">paths</span>
+
+<span class="nv">GameServer        = </span><span class="nx">require</span> <span class="s">&#39;game_server&#39;</span>
+<span class="nv">FormParser        = </span><span class="nx">require</span> <span class="s">&#39;form_parser&#39;</span>
+<span class="nv">AccountsManager   = </span><span class="nx">require</span> <span class="s">&#39;accounts_manager&#39;</span>
+<span class="nv">CharactersManager = </span><span class="nx">require</span> <span class="s">&#39;player_characters_manager&#39;</span>
+
+<span class="nv">Ut = </span><span class="nx">require</span> <span class="s">&#39;utility&#39;</span>
+
+<span class="nv">contentTypeTable =</span>
+  <span class="s">&#39;.js&#39;</span>   <span class="o">:</span> <span class="s">&#39;text/javascript&#39;</span>
+  <span class="s">&#39;.html&#39;</span> <span class="o">:</span> <span class="s">&#39;text/html&#39;</span>
+  <span class="s">&#39;.css&#39;</span>  <span class="o">:</span> <span class="s">&#39;text/css&#39;</span>
+
+  <span class="s">&#39;.png&#39;</span>  <span class="o">:</span> <span class="s">&#39;image/png&#39;</span>
+
+  <span class="s">&#39;.otf&#39;</span>  <span class="o">:</span> <span class="s">&#39;font/opentype&#39;</span>
+  <span class="s">&#39;.ttf&#39;</span>  <span class="o">:</span> <span class="s">&#39;font/ttf&#39;</span>
+
+<span class="nv">extensionPattern = </span><span class="sr">/\.(js|html|css|png|ttf|otf|ico)/</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>Auxiliary</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>• Ensure that client has signed in;</p>
+
+<p><code>request (request)</code> —> <code>(string)</code> or <code>(bool)</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">idPattern = </span><span class="sr">/[^;=]+$/</span>
+<span class="nv">ensureSession = </span><span class="nf">(request) -&gt;</span>
+  <span class="p">{</span><span class="nx">cookie</span><span class="p">}</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">headers</span>
+
+  <span class="k">return</span> <span class="kc">no</span> <span class="nx">unless</span> <span class="nx">cookie</span>
+
+  <span class="nv">cookies = </span><span class="p">{}</span>
+
+  <span class="k">for</span> <span class="nx">f</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nv">array = </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span> <span class="sr">/\=|;\s?/</span> <span class="k">by</span> <span class="mi">2</span>
+    <span class="nx">cookies</span><span class="p">[</span><span class="nx">f</span><span class="p">]</span> <span class="o">=</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="nv">session = </span><span class="nx">cookies</span><span class="p">.</span><span class="nx">id</span>
+
+  <span class="k">if</span> <span class="nx">session</span> <span class="o">and</span> <span class="nx">AccountsManager</span><span class="p">.</span><span class="nx">checkActuality</span> <span class="nx">session</span>
+    <span class="k">return</span> <span class="nx">session</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="kc">no</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>• Ensure that request has post method;</p>
+
+<p><code>request (request)</code> —> <code>(bool)</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">ensurePost = </span><span class="nf">(request) -&gt;</span>
+  <span class="k">return</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span> <span class="o">is</span> <span class="s">&#39;POST&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>• Ensure that incoming data is valid;</p>
+
+<p><code>chunk (string)</code> —> <code>(string)</code> or <code>(bool)</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">ensureIncomingData = </span><span class="nf">(chunk) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Slicing chunk</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span> <span class="nx">chunk</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">256</span>
+    <span class="nx">log</span> <span class="s">&#39;HTTP: Corrupted incoming data. Interrupting.&#39;</span><span class="p">,</span> <span class="s">&#39;critical&#39;</span>
+
+    <span class="k">return</span> <span class="kc">no</span>
+
+  <span class="k">try</span>
+    <span class="nv">data = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span> <span class="nx">chunk</span>
+
+  <span class="k">catch</span> <span class="nx">exception</span>
+    <span class="nx">log</span> <span class="s">&#39;JSON: Corrupted request. Interrupting.&#39;</span><span class="p">,</span> <span class="s">&#39;critical&#39;</span>
+
+    <span class="k">return</span> <span class="kc">no</span>
+
+  <span class="k">return</span> <span class="nx">data</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>• Redirect client;</p>
+
+<p><code>url (string),</code>response (response)`</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">redirect = </span><span class="nf">(url, response) -&gt;</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">writeHead</span> <span class="mi">302</span><span class="p">,</span>
+    <span class="s">&#39;location&#39;</span> <span class="o">:</span> <span class="nx">url</span>
+
+  <span class="nx">do</span> <span class="nx">response</span><span class="p">.</span><span class="nx">end</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>• Response HTML file;</p>
+
+<p><code>path (string)</code>, <code>response (response)</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">responseHTML = </span><span class="nf">(path, response) -&gt;</span>
+  <span class="nv">response.statusCode = </span><span class="mi">200</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="s">&#39;text/html&#39;</span>
+
+  <span class="nx">Ut</span><span class="p">.</span><span class="nx">responseFile</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">response</span>
+
+<span class="nv">responseMessage = </span><span class="nf">(message, response, code = 200) -&gt;</span>
+  <span class="nv">response.statusCode = </span><span class="nx">code</span>
+
+  <span class="nx">Ut</span><span class="p">.</span><span class="nx">responseText</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">response</span>
+
+<span class="nv">responseJSON = </span><span class="nf">(data, response, code = 200) -&gt;</span>
+  <span class="nv">message = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">data</span>
+
+  <span class="nx">responseMessage</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">code</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>• Response mistakes;</p>
+
+<p><code>details (object)</code>, <code>response (response)</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">responseSession = </span><span class="nf">(details, response) -&gt;</span>
+  <span class="nv">session = </span><span class="nx">AccountsManager</span><span class="p">.</span><span class="nx">openSession</span> <span class="nx">details</span>
+
+  <span class="nx">responseMessage</span> <span class="nx">session</span><span class="p">,</span> <span class="nx">response</span>
+
+<span class="nv">responseCharacter = </span><span class="nf">(name, response) -&gt;</span>
+  <span class="nv">character = </span><span class="nx">CharactersManager</span><span class="p">.</span><span class="nx">selectCharacter</span> <span class="nx">name</span>
+
+  <span class="nx">responseMessage</span> <span class="nx">character</span><span class="p">,</span> <span class="nx">response</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">Routes =</span>
+  <span class="s">&#39;/&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+    <span class="k">if</span> <span class="nx">session</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/game&#39;</span><span class="p">,</span> <span class="nx">response</span>
+    <span class="k">else</span>
+      <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/index.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/signin/data&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="k">if</span> <span class="nx">ensurePost</span> <span class="nx">request</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">addListener</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(chunk) -&gt;</span>
+        <span class="nv">form   = </span><span class="nx">ensureIncomingData</span> <span class="nx">chunk</span>
+
+        <span class="nx">unless</span> <span class="nx">form</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/406&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">status = </span><span class="nx">FormParser</span><span class="p">.</span><span class="nx">parseSignin</span> <span class="nx">form</span>
+
+        <span class="k">if</span> <span class="nx">status</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="p">[</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">]</span> <span class="o">=</span>
+            <span class="nx">form</span><span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="mi">1</span><span class="p">].</span><span class="nx">map</span> <span class="nf">(field) -&gt;</span>
+              <span class="k">return</span> <span class="nx">field</span><span class="p">.</span><span class="nx">value</span>
+
+          <span class="nx">responseSession</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">},</span> <span class="nx">response</span>
+        <span class="k">else</span>
+          <span class="nx">responseJSON</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="mi">406</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/signup&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/signup.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/signup/data&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="k">if</span> <span class="nx">ensurePost</span> <span class="nx">request</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">addListener</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(chunk) -&gt;</span>
+        <span class="nv">form   = </span><span class="nx">ensureIncomingData</span> <span class="nx">chunk</span>
+
+        <span class="nx">unless</span> <span class="nx">form</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/406&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">status = </span><span class="nx">FormParser</span><span class="p">.</span><span class="nx">parseSignup</span> <span class="nx">form</span>
+
+        <span class="k">if</span> <span class="nx">status</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="p">[</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">date</span><span class="p">]</span> <span class="o">=</span>
+            <span class="p">[</span><span class="nx">form</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">form</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">form</span><span class="p">[</span><span class="mi">3</span><span class="p">]].</span><span class="nx">map</span> <span class="nf">(field) -&gt;</span>
+              <span class="k">return</span> <span class="nx">field</span><span class="p">.</span><span class="nx">value</span>
+
+          <span class="nx">AccountsManager</span><span class="p">.</span><span class="nx">createAccount</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">date</span><span class="p">}</span>
+
+          <span class="nx">responseSession</span> <span class="p">{</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">},</span> <span class="nx">response</span>
+        <span class="k">else</span>
+          <span class="nx">responseJSON</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="mi">406</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/signout&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+    <span class="k">if</span> <span class="nx">session</span>
+      <span class="nx">AccountsManager</span><span class="p">.</span><span class="nx">closeSession</span> <span class="nx">session</span>
+
+      <span class="nv">response.statusCode = </span><span class="mi">200</span>
+
+      <span class="nx">do</span> <span class="nx">response</span><span class="p">.</span><span class="nx">end</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/401&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/game&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+    <span class="k">if</span> <span class="nx">session</span>
+      <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/game.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/game/characters/my&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+    <span class="nx">unless</span> <span class="nx">session</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/401&#39;</span><span class="p">,</span> <span class="nx">response</span>
+      <span class="k">return</span>
+
+    <span class="nv">username   = </span><span class="nx">AccountsManager</span>  <span class="p">.</span><span class="nx">discoverUsernameById</span> <span class="nx">session</span>
+    <span class="nv">characters = </span><span class="nx">CharactersManager</span><span class="p">.</span><span class="nx">getCharactersByOwner</span> <span class="nx">username</span>
+
+    <span class="nx">responseJSON</span> <span class="nx">characters</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/game/characters/create&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="k">if</span> <span class="nx">ensurePost</span> <span class="nx">request</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">addListener</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(chunk) -&gt;</span>
+        <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+        <span class="nx">unless</span> <span class="nx">session</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/401&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">form = </span><span class="nx">ensureIncomingData</span> <span class="nx">chunk</span>
+
+        <span class="nx">unless</span> <span class="nx">form</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">status = </span><span class="nx">FormParser</span><span class="p">.</span><span class="nx">parseCharacterCreation</span> <span class="nx">form</span>
+
+        <span class="k">if</span> <span class="nx">status</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nv">name  = </span><span class="nx">form</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">value</span>
+          <span class="nv">owner = </span><span class="nx">AccountsManager</span><span class="p">.</span><span class="nx">discoverUsernameById</span> <span class="nx">session</span>
+
+          <span class="nx">CharactersManager</span><span class="p">.</span><span class="nx">createCharacter</span> <span class="p">{</span><span class="nx">name</span><span class="p">,</span> <span class="nx">owner</span><span class="p">}</span>
+
+          <span class="nx">responseCharacter</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">response</span>
+        <span class="k">else</span>
+          <span class="nx">responseJSON</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="mi">406</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/game/characters/select&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="k">if</span> <span class="nx">ensurePost</span> <span class="nx">request</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">addListener</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="nf">(chunk) -&gt;</span>
+        <span class="nv">session = </span><span class="nx">ensureSession</span> <span class="nx">request</span>
+
+        <span class="nx">unless</span> <span class="nx">session</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/401&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">form = </span><span class="nx">ensureIncomingData</span> <span class="nx">chunk</span>
+
+        <span class="nx">unless</span> <span class="nx">form</span>
+          <span class="nx">redirect</span> <span class="s">&#39;/406&#39;</span><span class="p">,</span> <span class="nx">response</span>
+          <span class="k">return</span>
+
+        <span class="nv">status = </span><span class="nx">FormParser</span><span class="p">.</span><span class="nx">parseCharacterSelection</span> <span class="nx">form</span>
+
+        <span class="k">if</span> <span class="nx">status</span> <span class="o">is</span> <span class="kc">true</span>
+          <span class="nv">name = </span><span class="nx">form</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">value</span>
+
+          <span class="nx">responseCharacter</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">response</span>
+        <span class="k">else</span>
+          <span class="nx">responseJSON</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="mi">406</span>
+    <span class="k">else</span>
+      <span class="nx">redirect</span> <span class="s">&#39;/403&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/401&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/401.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/403&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/403.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;/404&#39;</span> <span class="o">:</span> <span class="nf">(request, response) -&gt;</span>
+    <span class="nx">responseHTML</span> <span class="s">&#39;client/pages/404.html&#39;</span><span class="p">,</span> <span class="nx">response</span>
+
+  <span class="s">&#39;resource&#39;</span> <span class="o">:</span> <span class="nf">(path, request, response) -&gt;</span>
+    <span class="nv">extension   = </span><span class="p">(</span><span class="nx">extensionPattern</span><span class="p">.</span><span class="nx">exec</span> <span class="nx">path</span><span class="p">)</span><span class="o">?</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nv">contentType = </span><span class="nx">contentTypeTable</span><span class="p">[</span><span class="nx">extension</span><span class="p">]</span> <span class="o">or</span> <span class="s">&#39;text/plain&#39;</span>
+
+    <span class="nv">path = </span><span class="nx">path</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\//</span><span class="p">,</span> <span class="s">&#39;&#39;</span>
+
+    <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;content-type&#39;</span><span class="p">,</span> <span class="nx">contentType</span>
+
+    <span class="nx">Ut</span><span class="p">.</span><span class="nx">responseResource</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.exports = </span><span class="nx">Routes</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

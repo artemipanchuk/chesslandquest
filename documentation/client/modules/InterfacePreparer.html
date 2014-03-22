@@ -1,0 +1,233 @@
+<!DOCTYPE html>  <html> <head>   <title>InterfacePreparer.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Application.html">                 Application.coffee               </a>                                           <a class="source" href="BattleManager.html">                 BattleManager.coffee               </a>                                           <a class="source" href="CanvasAnimations.html">                 CanvasAnimations.coffee               </a>                                           <a class="source" href="CanvasCharacters.html">                 CanvasCharacters.coffee               </a>                                           <a class="source" href="CanvasCharactersExtensions.html">                 CanvasCharactersExtensions.coffee               </a>                                           <a class="source" href="CanvasControls.html">                 CanvasControls.coffee               </a>                                           <a class="source" href="CanvasControlsExtensions.html">                 CanvasControlsExtensions.coffee               </a>                                           <a class="source" href="CanvasLocation.html">                 CanvasLocation.coffee               </a>                                           <a class="source" href="CanvasManager.html">                 CanvasManager.coffee               </a>                                           <a class="source" href="CanvasProjection.html">                 CanvasProjection.coffee               </a>                                           <a class="source" href="CharactersFPPC.html">                 CharactersFPPC.coffee               </a>                                           <a class="source" href="CharactersManager.html">                 CharactersManager.coffee               </a>                                           <a class="source" href="CharactersNPC.html">                 CharactersNPC.coffee               </a>                                           <a class="source" href="CharactersTPPC.html">                 CharactersTPPC.coffee               </a>                                           <a class="source" href="InterfaceHUD.html">                 InterfaceHUD.coffee               </a>                                           <a class="source" href="InterfaceHUDChat.html">                 InterfaceHUDChat.coffee               </a>                                           <a class="source" href="InterfaceHUDDialogs.html">                 InterfaceHUDDialogs.coffee               </a>                                           <a class="source" href="InterfaceManager.html">                 InterfaceManager.coffee               </a>                                           <a class="source" href="InterfacePreparer.html">                 InterfacePreparer.coffee               </a>                                           <a class="source" href="LocationManager.html">                 LocationManager.coffee               </a>                                           <a class="source" href="LocationPathfinder.html">                 LocationPathfinder.coffee               </a>                                           <a class="source" href="Preloader.html">                 Preloader.coffee               </a>                                           <a class="source" href="Socket.html">                 Socket.coffee               </a>                                           <a class="source" href="Utility.html">                 Utility.coffee               </a>                                           <a class="source" href="Validator.html">                 Validator.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               InterfacePreparer.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>
+
+<h1>Interface/Preparer</h1>
+
+<h3>Provides preparing menu</h3>
+
+<h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">@define</span> <span class="s">&#39;Interface/Preparer&#39;</span><span class="p">,</span> <span class="nf">(exports) -&gt;</span>
+  <span class="nv">Validator =</span>
+    <span class="nx">@require</span> <span class="s">&#39;Validator&#39;</span>
+
+  <span class="p">{</span><span class="nx">dom</span><span class="p">}</span> <span class="o">=</span> <span class="nx">atom</span>
+
+  <span class="nv">screen = </span><span class="nx">dom</span> <span class="s">&#39;#screen&#39;</span>
+
+  <span class="nx">screen</span><span class="p">.</span><span class="nx">css</span>
+    <span class="nv">height : </span><span class="nb">window</span><span class="p">.</span><span class="nx">innerHeight</span><span class="o">-</span><span class="mi">200</span>
+
+  <span class="nb">window</span><span class="p">.</span><span class="nv">onresize = </span><span class="o">-&gt;</span>
+    <span class="nx">screen</span><span class="p">.</span><span class="nx">css</span>
+      <span class="nv">height : </span><span class="nx">@innerHeight</span><span class="o">-</span><span class="mi">200</span>
+
+  <span class="nv">toggle = </span><span class="kc">undefined</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>• Create character selection subscreen;</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">createCharacterSelectionSubscreen = </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Animate to roll back toggle screen</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">toggle</span><span class="p">.</span><span class="nx">removeClass</span> <span class="s">&#39;upper-toggle&#39;</span>
+    <span class="nx">toggle</span><span class="p">.</span><span class="nx">addClass</span>    <span class="s">&#39;toggle-upper&#39;</span>
+
+    <span class="nv">previous = </span><span class="nx">toggle</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Wait while toggle is rolling then hide it</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">wait</span> <span class="mi">750</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">previous</span><span class="p">.</span><span class="nx">addClass</span> <span class="s">&#39;invisible&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>DOM Hierarchy looks like:</p>
+
+<pre><code>&lt;section&gt;
+    &lt;button&gt;
+    &lt;h2&gt;
+    &lt;section&gt;
+        &lt;ul&gt;
+        &lt;button&gt;
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">toggle = characterSelectionSubscreen = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;characterSelectionSubscreen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;lower-toggle screen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">screen</span><span class="p">)</span>
+
+    <span class="nv">revert = </span><span class="o">-&gt;</span>
+      <span class="nv">toggle = </span><span class="nx">previous</span>
+        <span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s">&#39;toggle-upper&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s">&#39;invisible&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;upper-toggle&#39;</span><span class="p">)</span>
+
+      <span class="nx">characterSelectionSubscreen</span><span class="p">.</span><span class="nx">addClass</span> <span class="s">&#39;toggle-lower&#39;</span>
+
+      <span class="nx">wait</span> <span class="mi">750</span><span class="p">,</span> <span class="o">-&gt;</span>
+        <span class="nx">characterSelectionSubscreen</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;goBackButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="nx">revert</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterSelectionSubscreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;h2&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Select your character:&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterSelectionSubscreen</span><span class="p">)</span>
+
+    <span class="nv">form = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;pseudoform&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;characterSelectionForm&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterSelectionSubscreen</span><span class="p">)</span>
+
+    <span class="nv">list = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;ul&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Now request client's characters from server</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">Validator</span><span class="p">.</span><span class="nx">requestMyCharacters</span> <span class="nf">(response) -&gt;</span>
+      <span class="nv">characters = </span><span class="nx">response</span><span class="p">.</span><span class="nx">fromJSON</span><span class="p">()</span>
+
+      <span class="nx">characters</span><span class="p">.</span><span class="nx">forEach</span> <span class="nf">(character) -&gt;</span>
+        <span class="nv">item = </span><span class="nx">dom</span>
+          <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;li&#39;</span><span class="p">)</span>
+          <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">character</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+          <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">list</span><span class="p">)</span>
+
+        <span class="nx">item</span><span class="p">.</span><span class="nx">bind</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="o">-&gt;</span>
+          <span class="nx">list</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;li&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s">&#39;selected&#39;</span><span class="p">)</span>
+
+          <span class="vi">@className = </span><span class="s">&#39;selected&#39;</span>
+
+          <span class="nx">input</span><span class="p">.</span><span class="nx">attr</span> <span class="s">&#39;value&#39;</span><span class="p">,</span> <span class="nx">@textContent</span>
+
+    <span class="nv">input = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;type&#39;</span><span class="p">,</span> <span class="s">&#39;hidden&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;formName&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;hr&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nv">submit = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Submit&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;submitButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nx">submit</span><span class="p">.</span><span class="nx">bind</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">Validator</span><span class="p">.</span><span class="nx">submitCharacterSelection</span> <span class="nx">form</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>• Create character creation subscreen</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">createCharacterCreationSubscreen = </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Animate to roll back selection screen</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">toggle</span><span class="p">.</span><span class="nx">removeClass</span> <span class="s">&#39;upper-toggle&#39;</span>
+    <span class="nx">toggle</span><span class="p">.</span><span class="nx">addClass</span>    <span class="s">&#39;toggle-upper&#39;</span>
+
+    <span class="nv">previous = </span><span class="nx">toggle</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Wait while selection screen is rolling then hide it</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">wait</span> <span class="mi">750</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">previous</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;invisible&#39;</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p><strong>Create</strong></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>DOM Hierarchy looks like:</p>
+
+<pre><code>&lt;section&gt;
+    &lt;button&gt;
+    &lt;h2&gt;
+    &lt;section&gt;
+        &lt;label&gt;
+        &lt;input&gt;
+        &lt;button&gt;
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">toggle = characterCreationSubscreen = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;characterCreationSubscreen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;lower-toggle screen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">screen</span><span class="p">)</span>
+
+    <span class="nv">revert = </span><span class="o">-&gt;</span>
+      <span class="nv">toggle = </span><span class="nx">previous</span>
+        <span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s">&#39;toggle-upper&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s">&#39;invisible&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;upper-toggle&#39;</span><span class="p">)</span>
+
+      <span class="nx">characterCreationSubscreen</span><span class="p">.</span><span class="nx">addClass</span> <span class="s">&#39;toggle-lower&#39;</span>
+
+      <span class="nx">wait</span> <span class="mi">750</span><span class="p">,</span> <span class="o">-&gt;</span>
+        <span class="nx">characterCreationSubscreen</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;goBackButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="nx">revert</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterCreationSubscreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;h2&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Give details for new character:&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterCreationSubscreen</span><span class="p">)</span>
+
+    <span class="nv">form = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;pseudoform&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;characterCreationForm&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">characterCreationSubscreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;for&#39;</span><span class="p">,</span> <span class="s">&#39;formName&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Name&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;formName&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;hr&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nv">submit = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Submit&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;submitButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span>
+
+    <span class="nx">submit</span><span class="p">.</span><span class="nx">bind</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">Validator</span><span class="p">.</span><span class="nx">submitCharacterCreation</span> <span class="nx">form</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>• Create selection screen;</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">exports.build = </span><span class="o">-&gt;</span>
+    <span class="nv">toggle = selectionScreen = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;selectionScreen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;screen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">screen</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p><strong>Note</strong>, direction can take one of next values:
+<code>lower-toggle</code>, <code>toggle-upper</code>, <code>upper-toggle</code>, <code>toggle-lower</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">signout = </span><span class="o">-&gt;</span>
+      <span class="nx">Validator</span><span class="p">.</span><span class="nx">submitLogout</span><span class="p">()</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;signoutButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Sign out&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="nx">signout</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">selectionScreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;h2&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Choose your character:&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">selectionScreen</span><span class="p">)</span>
+
+    <span class="nv">selectCharacter = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;selectionSection&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Select from your existing characters&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;hcolumn&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">selectionScreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;goDeeperButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="nx">createCharacterSelectionSubscreen</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">selectCharacter</span><span class="p">)</span>
+
+    <span class="nv">createCharacter = </span><span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;section&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;creationSection&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s">&#39;Create new character&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;hcolumn&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">selectionScreen</span><span class="p">)</span>
+
+    <span class="nx">dom</span>
+      <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&#39;button&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;goDeeperButton&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="nx">createCharacterCreationSubscreen</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">createCharacter</span><span class="p">)</span>
+
+  <span class="nv">exports.clean = </span><span class="nf">(back) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Animate to roll back toggle screen. Now it is previous.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">toggle</span><span class="p">.</span><span class="nx">removeClass</span> <span class="s">&#39;lower-toggle&#39;</span>
+    <span class="nx">toggle</span><span class="p">.</span><span class="nx">addClass</span>    <span class="s">&#39;toggle-upper&#39;</span>
+
+    <span class="nx">dom</span><span class="p">(</span><span class="s">&#39;section#screen&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">destroy</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Wait while previous screen is rolling and
+then destroy it and other previous screens.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">wait</span> <span class="mi">750</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">dom</span><span class="p">(</span><span class="s">&#39;section.pageContainer&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+
+      <span class="nx">call</span> <span class="nx">back</span>
+
+    <span class="nx">dom</span><span class="p">(</span><span class="s">&#39;section.pageContainer&#39;</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;vanishing&#39;</span><span class="p">)</span>
+
+    <span class="nb">window</span><span class="p">.</span><span class="nv">onresize = </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

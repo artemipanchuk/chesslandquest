@@ -1,0 +1,19 @@
+<section class = "lower screen">
+	<button class = "back"></button>
+
+	<h2>Select your character</h2>
+
+	<section class = "pseudoform">
+		<ul>
+			<% for ( var i = 0; i < characters.length; i++ ) { %>
+				<li><%=characters[i].name%></li>
+			<% } %>
+		</ul>
+
+		<hr>
+
+		<input type = "hidden" id = "formName">
+
+		<button class = "submit" id = "selection">Submit</button>
+	</section>
+</section>

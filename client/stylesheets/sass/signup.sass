@@ -1,0 +1,101 @@
+// ———————————————————————————————————————
+// Signup
+// Contains rules Sign Up page
+// ———————————————————————————————————————
+
+@import "common"
+
+// ———————————————————————————————————————
+
+.content h1
+	position : relative
+
+	height : 40px
+
+	margin  : 5px auto
+	padding : 0
+
+	font-family : $super
+	line-height : 30px
+	text-align  : center
+	font-size   : 60px
+
+	color : $blue
+
+.pseudoform
+	position : relative
+
+	width : 512px
+
+	padding : 20px
+	margin  : 0 auto 0 auto
+
+	text-align : center
+
+	color : $blue
+
+	label
+		display : inline-block
+
+		width : 75px
+
+		text-align : right
+		font-size  : 12px
+
+		font-family : $plain
+		font-weight : bold
+
+	input
+		display : inline-block
+
+		width  : 250px
+		height : 20px
+
+		margin  : 10px 100px 10px 5px
+		padding : 2px  5px 2px 5px
+
+		border-top    : thin   solid $gray
+		border-left   : thin   solid $gray
+		border-right  : thin   solid $gray
+		border-bottom : thin   solid $gray
+
+		border-radius : 5px
+
+		line-height    : 27px
+		vertical-align : middle
+
+		font-family : $plain
+		font-weight : bold
+		font-size   : 12px
+
+		color : $gray
+
+	h2
+		margin  : 10px 0 0 0
+		padding : 0
+
+		font-family : $plain
+		font-weight : bold
+		font-size   : 15px
+
+		color : $blue
+
+	#formCalendar
+		width : 340px
+
+		margin-left : 80px
+
+		text-align : center
+
+		&:hover
+			cursor : pointer
+
+	button
+		position : relative
+
+		width  : 100px
+
+		height : 30px
+
+		&:active
+			margin-top : 2px

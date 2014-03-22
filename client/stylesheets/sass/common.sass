@@ -1,0 +1,255 @@
+// ———————————————————————————————————————
+// Common
+// Contains common rules for all pages
+// ———————————————————————————————————————
+
+@font-face
+	font-family : "simplesnails"
+	font-style  : normal
+
+	src : url("/client/fonts/simplesnails.ttf") format("truetype")
+
+@font-face
+	font-family : "pfsquaresans"
+	font-style  : normal
+
+	src : url("/client/fonts/pfsquaresans.otf")
+
+// ———————————————————————————————————————
+
+$highest : 10
+$higher  : 9
+
+$bright : #FFC600
+$white  : #FFFFFF
+$light  : #666666
+$gray   : #444444
+$dark   : #222222
+$blue   : #221b31
+
+$super : simplesnails
+$plain : pfsquaresans
+
+// ———————————————————————————————————————
+
+body
+	height : 100%
+	width  : 100%
+
+	overflow : hidden
+
+	margin  : 0
+	padding : 0
+
+	background      : $dark url('/client/graphics/background.png') no-repeat
+	background-size : 110%
+
+*:focus
+	outline : none
+
+a
+	color : inherit
+	text-decoration : none
+
+button
+	vertical-align : middle
+	line-height    : 27px
+
+	border        : thin   solid $gray
+	border-bottom : medium solid $gray
+	border-radius : 5px
+
+	font-family : $plain
+	color       : $gray
+
+	background : $white
+
+	&:hover
+		cursor : pointer
+
+	&:active
+		border-bottom : thin solid $dark
+
+// ———————————————————————————————————————
+
+@-webkit-keyframes header-slide
+	from
+		top : -150px
+
+	to
+		top : 0
+
+@-moz-keyframes header-slide
+	from
+		top : -150px
+
+	to
+		top : 0
+
+@-webkit-keyframes footer-slide
+	from
+		bottom : -150px
+
+	to
+		bottom : 0
+
+@-moz-keyframes footer-slide
+	from
+		bottom : -150px
+
+	to
+		bottom : 0
+
+@-webkit-keyframes appearing
+	from
+		opacity : 0
+
+	to
+		opacity : 1
+
+@-moz-keyframes appearing
+	from
+		opacity : 0
+
+	to
+		opacity : 1
+
+.container
+	position : absolute
+
+	left : 50%
+
+	width  : 1024px
+
+	min-height : 100%
+
+	margin-left : -512px
+
+	header
+		position : fixed
+
+		z-index : 1
+		top     : 0
+
+		width  : inherit
+		height : 115px
+
+		margin  : 0
+		padding : 0
+
+		font-family : $plain
+		color       : $white
+
+		background : url(/client/graphics/header.png) no-repeat
+		background-size : 100%
+
+		-webkit-transition : top 1s
+		-moz-transition    : top 1s
+
+		-webkit-animation : header-slide .75s 1 ease-out
+		-moz-animation    : header-slide .75s 1 ease-out
+
+		.title
+			position : absolute
+
+			left : 50px
+
+			line-height : 105px
+
+			vertical-align : middle
+
+			text-decoration : none
+			font-family     : $super
+			font-weight     : bold
+			font-size       : 50px
+			color           : $white
+
+			&:hover
+				cursor : pointer
+
+				text-shadow : 0 0 20px $gray
+
+		.name
+			display  : block
+			position : absolute
+
+			bottom : 5px
+			right  : 5px
+
+			padding : 15px
+
+			text-align : right
+
+			font-family : $super
+			line-height : 30px
+			font-weight : bold
+			font-size   : 30px
+
+	.content
+		position : absolute
+
+		top   : 0
+		left  : 1%
+		right : 1%
+
+		min-height : 100%
+
+		box-sizing : border-box
+
+		padding : 130px 20px 130px 20px
+
+		background : $white
+
+		box-shadow : 0 0 20px 5px #222222
+
+		-webkit-animation : appearing .75s 1 ease-out
+		animation : appearing .75s 1 ease-out
+
+	footer
+		position : fixed
+
+		z-index : 1
+
+		bottom : -1px
+
+		width  : inherit
+		height : 115px
+
+		margin : 0
+
+		background      : url(/client/graphics/footer.png) no-repeat
+		background-size : 100%
+
+		-webkit-transition : bottom 1s
+		-moz-transition    : bottom 1s
+
+		-webkit-animation : footer-slide .75s 1 ease-out
+		-moz-animation    : footer-slide .75s 1 ease-out
+
+	.pseudoform
+		.message
+			position : absolute
+
+			width  : 100px
+			height : 40px
+
+			padding : 4px 60px 0 30px
+
+			font-family : $plain
+			line-height : 32.5px
+			font-weight : bold
+			text-align  : center
+			font-size   : 9.5px
+
+			opacity : 0.8
+
+			color : $light
+
+			background      : url(/client/graphics/ui-warning.png) 0 0 no-repeat
+			background-size : 130px 40px
+
+		.invalid
+			background : $bright
+
+		.invalid:hover
+			cursor : pointer

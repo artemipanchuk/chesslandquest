@@ -1,0 +1,170 @@
+<!DOCTYPE html>  <html> <head>   <title>loader.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="401.html">                 401.coffee               </a>                                           <a class="source" href="403.html">                 403.coffee               </a>                                           <a class="source" href="404.html">                 404.coffee               </a>                                           <a class="source" href="game.html">                 game.coffee               </a>                                           <a class="source" href="index.html">                 index.coffee               </a>                                           <a class="source" href="loader.html">                 loader.coffee               </a>                                           <a class="source" href="signup.html">                 signup.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               loader.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>
+
+<h1>Loader</h1>
+
+<h3>Provides javascript loading interface</h3>
+
+<h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>• Beautiful alias for <code>do</code>;</p>
+
+<p>'scope (function)'</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="vi">@call = </span><span class="nf">(scope, args...) -&gt;</span>
+  <span class="nx">scope</span> <span class="nx">args</span><span class="p">...</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>• Compact XHR interface</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">XHR = </span><span class="nx">do</span> <span class="o">-&gt;</span>
+  <span class="nv">current = </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+  <span class="nv">get = </span><span class="s">&#39;GET&#39;</span>
+
+  <span class="nv">ready = </span><span class="mi">4</span>
+  <span class="nv">ok    = </span><span class="mi">200</span>
+
+  <span class="nv">defaults =</span>
+    <span class="nv">method : </span><span class="nx">get</span>
+    <span class="nv">async  : </span><span class="kc">yes</span>
+    <span class="nv">url    : </span><span class="nx">current</span>
+
+  <span class="k">return</span> <span class="nf">(options) -&gt;</span>
+    <span class="nv">request = </span><span class="k">new</span> <span class="nx">XMLHttpRequest</span>
+
+    <span class="nv">options.onLoad   = </span><span class="nx">options</span><span class="p">.</span><span class="nx">onLoad</span>  <span class="o">or</span> <span class="kc">null</span>
+    <span class="nv">options.onError  = </span><span class="nx">options</span><span class="p">.</span><span class="nx">onError</span> <span class="o">or</span> <span class="kc">null</span>
+
+    <span class="nv">mode = </span><span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">options</span><span class="p">.</span><span class="nx">mode</span> <span class="o">is</span> <span class="s">&#39;undefined&#39;</span><span class="p">)</span> <span class="o">or</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">mode</span> <span class="o">is</span> <span class="kc">yes</span><span class="p">)</span> <span class="k">then</span> <span class="kc">yes</span> <span class="k">else</span> <span class="kc">no</span>
+
+    <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span>
+      <span class="nx">options</span><span class="p">.</span><span class="nx">method</span> <span class="o">or</span> <span class="nx">defaults</span><span class="p">.</span><span class="nx">method</span><span class="p">,</span>
+      <span class="nx">options</span><span class="p">.</span><span class="nx">url</span>    <span class="o">or</span> <span class="nx">defaults</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+      <span class="nx">mode</span>
+    <span class="p">)</span>
+
+    <span class="nv">responseHandler = </span><span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">is</span> <span class="nx">ready</span>
+        <span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">is</span> <span class="nx">ok</span>
+          <span class="nx">options</span><span class="p">.</span><span class="nx">onLoad</span>  <span class="nx">request</span><span class="p">.</span><span class="nx">response</span> <span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">onLoad</span>
+        <span class="k">else</span>
+          <span class="nx">options</span><span class="p">.</span><span class="nx">onError</span> <span class="nx">request</span><span class="p">.</span><span class="nx">response</span> <span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">onError</span>
+
+    <span class="nx">request</span><span class="p">.</span><span class="nx">send</span> <span class="kc">null</span>
+
+    <span class="k">if</span> <span class="nx">mode</span>
+      <span class="nv">request.onreadystatechange = </span><span class="nx">responseHandler</span>
+    <span class="k">else</span>
+      <span class="nx">call</span> <span class="nx">responseHandler</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="vi">@Loader = </span><span class="nx">do</span> <span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h3>Javascript loading</h3>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">libraryPattern = </span><span class="sr">/\/library\//g</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>• Request Javascript file;</p>
+
+<p><code>url (string)</code>, <code>handler (function)</code>, <code>mode (string)</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">requestJS = </span><span class="nf">(url, handler, mode) -&gt;</span>
+    <span class="nx">XHR</span>
+      <span class="nv">url  : </span><span class="nx">url</span>
+      <span class="nv">mode : </span><span class="nx">mode</span>
+
+      <span class="nv">onLoad : </span><span class="nf">(code) -&gt;</span>
+        <span class="k">if</span> <span class="nx">libraryPattern</span><span class="p">.</span><span class="nx">test</span> <span class="nx">url</span>
+          <span class="nx">evaluateLibrary</span> <span class="nx">code</span>
+        <span class="k">else</span>
+          <span class="nx">evaluateScript</span> <span class="nx">code</span>
+
+        <span class="nx">handler</span><span class="p">.</span><span class="nx">call</span> <span class="nx">sandbox</span> <span class="k">if</span> <span class="nx">handler</span>
+
+      <span class="nv">onError : </span><span class="o">-&gt;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&quot;Loader: Failed to load </span><span class="si">#{</span><span class="nx">url</span><span class="si">}</span><span class="s">&quot;</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h3>Cascad Style Sheets loading</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>• Request Javascript file;</p>
+
+<p><code>url (string)</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">requestCSS = </span><span class="nf">(url) -&gt;</span>
+    <span class="nv">node = </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span> <span class="s">&#39;link&#39;</span>
+    <span class="nv">head = </span><span class="nb">document</span><span class="p">.</span><span class="nx">head</span>
+
+    <span class="nv">node.rel  = </span><span class="s">&#39;stylesheet&#39;</span>
+    <span class="nv">node.href = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">url</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span> <span class="nx">node</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <h3>Common loading</h3>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">extensionPattern = </span><span class="sr">/\.\w+$/</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>• Request Javascript file;</p>
+
+<p><code>url (string)</code>, <code>handler (function)</code>, <code>mode (string)</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">request = </span><span class="nf">(url, handler, mode) -&gt;</span>
+    <span class="nv">extension = </span><span class="nx">extensionPattern</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">url</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Simplify url</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">url = </span><span class="s">&quot;/client/</span><span class="si">#{</span><span class="nx">url</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="k">switch</span> <span class="nx">extension</span>
+      <span class="k">when</span> <span class="s">&#39;.js&#39;</span>
+        <span class="nx">requestJS</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">mode</span>
+
+      <span class="k">when</span> <span class="s">&#39;.css&#39;</span>
+        <span class="nx">requestCSS</span> <span class="nx">url</span>
+
+      <span class="k">else</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s">&#39;Unresolved extension&#39;</span>
+
+  <span class="nv">load = </span><span class="nf">(files, handlers, mode) -&gt;</span>
+    <span class="nx">handlers</span> <span class="o">?=</span> <span class="p">{}</span>
+
+    <span class="nx">files</span><span class="p">.</span><span class="nx">forEach</span> <span class="nf">(url) -&gt;</span>
+      <span class="nx">request</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">handlers</span><span class="p">[</span><span class="nx">url</span><span class="p">],</span> <span class="nx">mode</span>
+
+  <span class="nv">onfinish = </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <h3>Execution</h3>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">evaluateScript = </span><span class="nf">(code) -&gt;</span>
+    <span class="nb">eval</span> <span class="nx">code</span>
+
+  <span class="nv">evaluateLibrary = </span><span class="nf">(code) -&gt;</span>
+    <span class="nb">eval</span> <span class="nx">code</span>
+
+  <span class="nv">evaluateWarrant = </span><span class="nf">(code) -&gt;</span>
+    <span class="nb">eval</span> <span class="nx">code</span>
+
+    <span class="p">{</span><span class="nx">files</span><span class="p">,</span> <span class="nx">handlers</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@</span>
+
+    <span class="nx">load</span> <span class="nx">files</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">handlers</span>     <span class="k">if</span> <span class="nx">files</span><span class="p">.</span><span class="nx">a</span>
+    <span class="nx">load</span> <span class="nx">files</span><span class="p">.</span><span class="nx">s</span><span class="p">,</span> <span class="nx">handlers</span><span class="p">,</span> <span class="kc">no</span> <span class="k">if</span> <span class="nx">files</span><span class="p">.</span><span class="nx">s</span>
+
+    <span class="k">if</span> <span class="nx">handlers</span><span class="o">?</span><span class="p">.</span><span class="nx">onfinish</span>
+      <span class="nv">onfinish = </span><span class="nx">handlers</span><span class="p">.</span><span class="nx">onfinish</span>
+
+    <span class="nx">do</span> <span class="nx">finalize</span>
+
+  <span class="nv">finalize = </span><span class="o">-&gt;</span>
+    <span class="nx">onfinish</span><span class="p">.</span><span class="nx">call</span> <span class="nx">sandbox</span> <span class="k">if</span> <span class="nx">onfinish</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;Loader: Done&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <h3>Sandbox</h3>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">sandbox =</span>
+    <span class="nv">define : </span><span class="nf">(module, implement) -&gt;</span>
+      <span class="nv">depth   = </span><span class="nx">module</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
+      <span class="nv">imports = </span><span class="p">{}</span>
+
+      <span class="nx">implement</span><span class="p">.</span><span class="nx">call</span> <span class="nx">@</span><span class="p">,</span> <span class="nx">imports</span>
+
+      <span class="nv">length = </span><span class="nx">depth</span><span class="p">.</span><span class="nx">length</span>
+
+      <span class="k">if</span> <span class="nx">length</span> <span class="o">is</span> <span class="mi">1</span>
+        <span class="nx">@</span><span class="p">[</span><span class="nx">depth</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">imports</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="nx">length</span> <span class="o">is</span> <span class="mi">2</span>
+        <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">]</span> <span class="o">=</span> <span class="nx">depth</span>
+
+        <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span>   <span class="o">?=</span> <span class="p">{}</span>
+        <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">][</span><span class="nx">b</span><span class="p">]</span> <span class="o">=</span> <span class="nx">imports</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="nx">length</span> <span class="o">is</span> <span class="mi">3</span>
+        <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">depth</span>
+
+        <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span>    <span class="o">?=</span> <span class="p">{}</span>
+        <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">][</span><span class="nx">b</span><span class="p">]</span> <span class="o">?=</span> <span class="p">{}</span>
+        <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">][</span><span class="nx">b</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">imports</span>
+
+    <span class="nv">require : </span><span class="nf">(modules...) -&gt;</span>
+      <span class="k">if</span> <span class="nx">modules</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">1</span>
+        <span class="nv">depth = </span><span class="nx">modules</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
+
+        <span class="k">if</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span>
+          <span class="k">return</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">reduce</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="mi">1</span>
+              <span class="k">return</span> <span class="nx">@</span><span class="p">[</span><span class="nx">a</span><span class="p">][</span><span class="nx">b</span><span class="p">]</span>
+            <span class="k">else</span>
+              <span class="k">return</span> <span class="nx">a</span><span class="p">[</span><span class="nx">b</span><span class="p">]</span>
+        <span class="k">else</span>
+          <span class="k">return</span> <span class="nx">@</span><span class="p">[</span><span class="nx">depth</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="nx">modules</span><span class="p">.</span><span class="nx">map</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span>
+          <span class="k">return</span> <span class="nx">@require</span> <span class="nx">name</span>
+
+  <span class="nv">warrant = </span><span class="p">{}</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h3>Export</h3>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">call</span> <span class="o">-&gt;</span>
+    <span class="nv">page = </span><span class="nx">do</span> <span class="o">-&gt;</span>
+      <span class="nv">page = </span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span>
+        <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\//g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+
+      <span class="nv">page = </span><span class="s">&#39;index&#39;</span> <span class="k">if</span> <span class="nx">page</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+
+      <span class="k">return</span> <span class="s">&quot;loader/js/</span><span class="si">#{</span><span class="nx">page</span><span class="si">}</span><span class="s">.js&quot;</span>
+
+    <span class="nv">evaluateWarrant = </span><span class="nx">evaluateWarrant</span><span class="p">.</span><span class="nx">bind</span> <span class="nx">warrant</span>
+    <span class="nv">evaluateScript  = </span><span class="nx">evaluateScript</span> <span class="p">.</span><span class="nx">bind</span> <span class="nx">sandbox</span>
+
+    <span class="nx">XHR</span>
+      <span class="nv">url    : </span><span class="nx">page</span>
+      <span class="nv">onLoad : </span><span class="nx">evaluateWarrant</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

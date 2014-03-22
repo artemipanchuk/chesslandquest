@@ -1,0 +1,285 @@
+// ———————————————————————————————————————
+// Preparer
+// Contains rules for preparer
+// ———————————————————————————————————————
+
+@import "common"
+
+// ———————————————————————————————————————
+
+$darkest : #111111
+
+// ———————————————————————————————————————
+
+.game-mode
+	background : $darkest
+
+*.vanishing
+	opacity : 0
+
+	-webkit-transition : opacity .5s
+	-moz-transition    : opacity .5s
+
+section.container.vanishing
+	header
+		top : -230px
+
+	footer
+		bottom : -230px
+
+section.container
+	.content
+		padding : 0
+
+.fader
+	position : absolute
+
+	left : 0
+	top  : 0
+
+	width  : 100%
+	height : 100%
+
+	background : $darkest
+
+	-webkit-animation : appearing .65s 1 ease-in-out
+	-moz-animation : appearing .65s 1 ease-in-out
+
+#root
+	display  : block
+	position : absolute
+
+	width  : 100%
+	height : 100%
+
+	margin : 100px 0 0 0
+
+	background : url('/client/graphics/ui-background.png') no-repeat 50% 50%
+
+.screen
+	position : absolute
+
+	top  : 0
+	left : 0
+
+	overflow : hidden
+
+	padding : 0
+	margin  : 0
+
+	width  : 100%
+	height : 100%
+
+	font-family : $plain
+	text-align  : center
+
+	color : $blue
+
+	background : white
+
+	h2
+		position : absolute
+
+		width : 75%
+
+		line-height    : 60px
+		vertical-align : middle
+
+		margin  : 0 12.5% 0 12.5%
+		padding : 20px
+
+		font-family : $super
+		font-weight : bold
+		font-size   : 60px
+
+		color : $blue
+
+	-webkit-transition : top 1s
+	-moz-transition    : top 1s
+
+	&.upper
+		top : -100%
+
+	&.lower
+		top : 100%
+
+	.hcolumn
+		position : absolute
+		display  : block
+
+		width  :  40%
+		height : 100%
+
+		padding : 0
+		margin  : 0
+
+		box-sizing : border-box
+		-moz-box-sizing : border-box
+
+		font-size : 15px
+
+		p
+			position : absolute
+
+			bottom : 17.5%
+
+			width : 100%
+
+		&:first-of-type
+			left : 12.5%
+
+		&:last-of-type
+			right : 12.5%
+
+	section#creation
+		background : transparent url(/client/graphics/ui-create.png) 50% 50% no-repeat
+		background-size : 50%
+
+	section#selection
+		background : transparent url(/client/graphics/ui-select.png) 50% 50% no-repeat
+		background-size : 50%
+
+	button
+		display : block
+
+		width  : 40px
+		height : 40px
+
+		&.deeper
+			position : absolute
+
+			bottom : 10%
+			left   : 50%
+
+			margin : 0 0 0 -20px
+
+			background      : url(/client/graphics/ui-deeper.png) 50% 50% no-repeat
+			background-size : 100%
+
+			&:active
+				margin-bottom : -1px
+
+		&.back
+			position : absolute
+
+			top  : 12.5px
+			left : 10px
+
+			background      : white url(/client/graphics/ui-back.png) 50% 50% no-repeat
+			background-size : 100%
+
+			&:active
+				margin-bottom : 1px
+
+		&.signout
+			position : absolute
+
+			vertical-align : middle
+			line-height    : 12.5px
+
+			top  : 12.5px
+			left : 10px
+
+			padding-top : 5px
+
+			&:active
+				margin-top : 1px
+
+	.pseudoform
+		position : absolute
+
+		width : 512px
+
+		left : 50%
+		top  : 15%
+
+		padding     :   20px
+		margin-left : -256px
+
+		text-align : center
+
+		color : $blue
+
+		label
+			display : inline-block
+
+			width : 75px
+
+			text-align : right
+			font-size  : 12px
+
+			font-family : $plain
+			font-weight : bold
+
+		input
+			display : inline-block
+
+			width  : 250px
+			height : 20px
+
+			margin  : 10px 100px 10px 5px
+			padding : 2px 5px 2px 5px
+
+			border-right  : 2px solid $gray
+			border-bottom : 1px solid $gray
+			border-left   : 2px solid $gray
+			border-top    : 1px solid $gray
+
+			border-radius :  5px
+			line-height   : 12px
+
+			vertical-align : middle
+
+			font-family : $plain
+			font-weight : bold
+			font-size   : 12px
+
+		button
+			position : relative
+
+			width  : 100px
+			height : 30px
+
+			margin : auto
+
+			line-height : 29px
+
+			&:active
+				margin-top : 9px
+
+		ul
+			display : block
+
+			height : 250px
+			width  : 100%
+
+			overflow-y : scroll
+
+			list-style : none
+
+			margin  : 0
+			padding : 0
+
+			li
+				display : block
+
+				height : 20px
+
+				line-height    : 25px
+				vertical-align : middle
+
+				padding : 5px
+
+				margin  : 10px
+
+				font-weight : bold
+
+				&:hover
+					cursor : pointer
+
+				&.selected
+					border-radius : 5px
+
+					color : $white
+
+					background : $blue

@@ -1,0 +1,118 @@
+// ———————————————————————————————————————
+// Index
+// Contains rules for index page
+// ———————————————————————————————————————
+
+@import "common"
+
+// ———————————————————————————————————————
+
+header
+	.signup
+		position : absolute
+		display  : block
+
+		top  : 65px
+		left : 300px
+
+		width  : 70px
+		height : 20px
+
+		line-height : 20px
+
+		font-size   : 20px
+		font-family : $super
+
+		color : $white
+
+	&:hover
+		text-shadow : 0 0 20px $gray
+
+.pseudoform
+	position : absolute
+	display  : block
+
+	right : 50px
+
+	width  : 250px
+	height : 110px
+
+	padding : 0
+
+	line-height : 20px
+
+	vertical-align : middle
+
+	label
+		display : inline-block
+
+		width  : 60px
+		height : 30px
+
+		vertical-align : middle
+		line-height    : 45px
+
+		font-size   : 20px
+		font-weight : bold
+		font-family : $super
+		text-align  : right
+
+	input
+		display : inline-block
+
+		width  : 160px
+		height : 21px
+
+		margin  : 15px 0   2px 5px
+		padding : 2px  5px 2px 5px
+
+		border-radius :  5px
+		line-height   : 28px
+
+		border-top    : none
+		border-left   : 3px solid $gray
+		border-right  : 1px solid $light
+		border-bottom : 2px solid $light
+
+		color : $blue
+
+		vertical-align : middle
+
+		font-family : $plain
+		font-weight : bold
+		font-size   : 12px
+
+		background : $white
+
+		&:focus
+			outline : none
+
+	button
+		position : absolute
+
+		display : block
+
+		right  :  5px
+		bottom : 26px
+
+		width  : 40px
+		height : 69px
+
+		border-top    : none
+		border-left   : 3px solid $gray
+		border-right  : 1px solid $light
+		border-bottom : 1px solid $light
+
+		border-top-right-radius    : 5px
+		border-bottom-right-radius : 5px
+
+		background      : white url(/client/graphics/ui-enter.png) no-repeat 50% 50%
+		background-size : 29px 29px
+
+		&:hover
+			cursor : pointer
+
+		&:active
+			border-top    : 1px solid $light
+			border-left   : 1px solid $gray
+			border-bottom : none

@@ -1,0 +1,56 @@
+<!DOCTYPE html>  <html> <head>   <title>CharactersTPPC.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Application.html">                 Application.coffee               </a>                                           <a class="source" href="BattleManager.html">                 BattleManager.coffee               </a>                                           <a class="source" href="CanvasAnimations.html">                 CanvasAnimations.coffee               </a>                                           <a class="source" href="CanvasCharacters.html">                 CanvasCharacters.coffee               </a>                                           <a class="source" href="CanvasCharactersExtensions.html">                 CanvasCharactersExtensions.coffee               </a>                                           <a class="source" href="CanvasControls.html">                 CanvasControls.coffee               </a>                                           <a class="source" href="CanvasControlsExtensions.html">                 CanvasControlsExtensions.coffee               </a>                                           <a class="source" href="CanvasLocation.html">                 CanvasLocation.coffee               </a>                                           <a class="source" href="CanvasManager.html">                 CanvasManager.coffee               </a>                                           <a class="source" href="CanvasProjection.html">                 CanvasProjection.coffee               </a>                                           <a class="source" href="CharactersFPPC.html">                 CharactersFPPC.coffee               </a>                                           <a class="source" href="CharactersManager.html">                 CharactersManager.coffee               </a>                                           <a class="source" href="CharactersNPC.html">                 CharactersNPC.coffee               </a>                                           <a class="source" href="CharactersTPPC.html">                 CharactersTPPC.coffee               </a>                                           <a class="source" href="InterfaceHUD.html">                 InterfaceHUD.coffee               </a>                                           <a class="source" href="InterfaceHUDChat.html">                 InterfaceHUDChat.coffee               </a>                                           <a class="source" href="InterfaceHUDDialogs.html">                 InterfaceHUDDialogs.coffee               </a>                                           <a class="source" href="InterfaceManager.html">                 InterfaceManager.coffee               </a>                                           <a class="source" href="InterfacePreparer.html">                 InterfacePreparer.coffee               </a>                                           <a class="source" href="LocationManager.html">                 LocationManager.coffee               </a>                                           <a class="source" href="LocationPathfinder.html">                 LocationPathfinder.coffee               </a>                                           <a class="source" href="Preloader.html">                 Preloader.coffee               </a>                                           <a class="source" href="Socket.html">                 Socket.coffee               </a>                                           <a class="source" href="Utility.html">                 Utility.coffee               </a>                                           <a class="source" href="Validator.html">                 Validator.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               CharactersTPPC.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>
+
+<h1>Characters/TPPC</h1>
+
+<h3>Provides interface to act with TPPCs</h3>
+
+<h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">@define</span> <span class="s">&#39;Characters/TPPC&#39;</span><span class="p">,</span> <span class="nf">(exports) -&gt;</span>
+  <span class="p">[</span><span class="nx">CanvasCharacters</span><span class="p">,</span> <span class="nx">CanvasControls</span><span class="p">]</span> <span class="o">=</span>
+    <span class="nx">@require</span> <span class="s">&#39;Canvas/Characters&#39;</span><span class="p">,</span>
+             <span class="s">&#39;Canvas/Controls&#39;</span>
+
+  <span class="nv">LocationManager =</span>
+    <span class="nx">@require</span> <span class="s">&#39;Location/Manager&#39;</span>
+
+  <span class="nv">Socket =</span>
+    <span class="nx">@require</span> <span class="s">&#39;Socket&#39;</span>
+
+  <span class="nv">all = </span><span class="p">{}</span>
+
+  <span class="nv">listen = </span><span class="o">-&gt;</span>
+    <span class="nx">Socket</span><span class="p">.</span><span class="nx">listen</span> <span class="s">&#39;tppc:register&#39;</span><span class="p">,</span> <span class="nf">(character) -&gt;</span>
+      <span class="nx">register</span> <span class="nx">character</span>
+
+    <span class="nx">Socket</span><span class="p">.</span><span class="nx">listen</span> <span class="s">&#39;tppc:drop&#39;</span><span class="p">,</span> <span class="nf">(name) -&gt;</span>
+      <span class="nx">drop</span> <span class="nx">name</span>
+
+    <span class="nx">Socket</span><span class="p">.</span><span class="nx">listen</span> <span class="s">&#39;tppc:move&#39;</span><span class="p">,</span> <span class="nf">(course) -&gt;</span>
+      <span class="nx">move</span> <span class="nx">course</span>
+
+  <span class="nv">register = </span><span class="nf">(character) -&gt;</span>
+    <span class="nx">all</span><span class="p">[</span><span class="nx">character</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">character</span>
+
+    <span class="nx">CanvasCharacters</span><span class="p">.</span><span class="nx">register</span> <span class="s">&#39;tppc&#39;</span><span class="p">,</span> <span class="nx">character</span>
+
+  <span class="nv">move = </span><span class="nf">(course) -&gt;</span>
+    <span class="p">{</span><span class="nx">name</span><span class="p">,</span> <span class="nx">point</span><span class="p">}</span> <span class="o">=</span> <span class="nx">course</span>
+
+    <span class="nv">character = </span><span class="nx">all</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+
+    <span class="nv">from = </span><span class="nx">character</span><span class="p">.</span><span class="nx">point</span>
+    <span class="nv">to   = </span><span class="nx">point</span>
+
+    <span class="nv">path = </span><span class="nx">LocationManager</span><span class="p">.</span><span class="nx">createPath</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">to</span>
+
+    <span class="k">return</span> <span class="nx">unless</span> <span class="nx">path</span>
+
+    <span class="nx">CanvasCharacters</span><span class="p">.</span><span class="nx">move</span> <span class="s">&#39;tppc&#39;</span><span class="p">,</span> <span class="nx">character</span><span class="p">,</span> <span class="nx">path</span>
+
+  <span class="nv">drop = </span><span class="nf">(name) -&gt;</span>
+    <span class="nx">CanvasCharacters</span><span class="p">.</span><span class="nx">drop</span> <span class="s">&#39;tppc&#39;</span><span class="p">,</span> <span class="nx">name</span>
+
+    <span class="k">delete</span> <span class="nx">all</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>• Initial function;</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">exports.listen = </span><span class="o">-&gt;</span>
+    <span class="nx">listen</span><span class="p">()</span>
+
+  <span class="nv">exports.get = </span><span class="nf">(name) -&gt;</span>
+    <span class="k">return</span> <span class="nx">all</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">or</span> <span class="kc">null</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h3>———————————————————————————————————————</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

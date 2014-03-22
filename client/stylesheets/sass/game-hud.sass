@@ -1,0 +1,478 @@
+// ———————————————————————————————————————
+// Game HUD
+// Contains rules for HUD
+// ———————————————————————————————————————
+
+@import "common"
+
+// ———————————————————————————————————————
+
+.hidden
+	display : none
+
+h1
+	position : fixed
+	display  : block
+
+	top  : 25%
+	left :   0
+
+	z-index : $highest
+
+	width  : 100%
+	height : 50px
+
+	padding :       0
+	margin  : -25px 0
+
+	text-align : center
+
+	vertical-align : middle
+	line-height    : 50px
+
+	font-family : $plain
+	font-size   : 50px
+
+	color : $white
+
+	text-shadow : 0 0 2.5px white
+
+	-webkit-animation : appearing .5s 1 ease-in-out
+	-moz-animation    : appearing .5s 1 ease-in-out
+
+	&.yellow
+		color : $bright
+
+// ———————————————————————————————————————
+
+#chat
+	position : fixed
+
+	bottom : -125px
+
+	z-index : 10
+
+	opacity : 0.8
+
+	width  : 400px
+	height : 115px
+
+	padding : 5px
+
+	border-top-right-radius : 5px
+
+	font-family : pfsquaresans
+
+	color : #221b31
+
+	background : #221b31
+
+	-webkit-transition : bottom .25s
+	-moz-transition    : bottom .25s
+
+	&:hover
+		bottom : 0
+
+	.header
+		position : absolute
+
+		top  : -30px
+		left :   0px
+
+		width  : 30px
+		height : 30px
+
+		padding : 0 5px
+
+		border-top-right-radius : 10px
+
+		background      : #221b31 url(/client/graphics/hud-chat.png) 25% 50% no-repeat
+		background-size : 25px 25px
+
+		&:hover
+			cursor : pointer
+
+	.messages
+		position   : absolute
+		overflow-y : scroll
+
+		top : 0
+
+		width  : 390px
+		height :  70px
+
+		margin  : 5px 0
+		padding : 5px
+
+		background : white
+
+	.field
+		position : absolute
+
+		overflow-y : hidden
+
+		bottom : 0
+
+		width  : 390px
+		height :  20px
+
+		margin  : 5px 0 5px 0
+		padding : 5px
+
+		line-height : 25px
+
+		vertical-align : middle
+
+		font-size : 12.5px
+
+		background : $white
+
+// ———————————————————————————————————————
+
+#menu
+	position : fixed
+
+	top : -125px
+
+	z-index : 10
+
+	opacity : 0.8
+
+	width  : 400px
+	height : 115px
+
+	padding : 5px
+
+	border-bottom-right-radius : 5px
+
+	font-family : pfsquaresans
+
+	color      : $white
+	background : $blue
+
+	-webkit-transition : top .25s
+	-moz-transition    : top .25s
+
+	&:hover
+		top : 0
+
+	.item
+		padding : 2.5px
+
+		width : 100px
+
+		clear : left
+
+		&:hover
+			cursor : pointer
+
+			text-shadow : 0 0 2.5px $white
+
+	#signout
+		padding-top : 5px
+
+		border-top : solid thin $white
+
+	.header
+		position : absolute
+
+		bottom : -30px
+		left   :   0px
+
+		width  : 30px
+		height : 30px
+
+		padding : 0 5px
+
+		border-bottom-right-radius : 10px
+
+		background      : $blue url(/client/graphics/hud-menu.png) 25% 50% no-repeat
+		background-size : 25px 25px
+
+		&:hover
+			cursor : pointer
+
+// ———————————————————————————————————————
+
+#arranger
+	position : fixed
+
+	bottom : 50%
+	right  :   0
+
+	z-index : $highest
+
+	width  : 115px
+	height : 400px
+
+	margin-bottom : -200px
+
+	padding : 5px
+
+	border-top-right-radius : 5px
+	border-top-left-radius  : 5px
+
+	font-family : $plain
+	color       : $white
+
+	background : $blue
+
+	-webkit-animation : appearing .25s 1 ease-out
+	-moz-animation : appearing .25s 1 ease-out
+
+	.control-case
+		position : absolute
+
+		top    : 5px
+		right  : 5px
+		left   : 5px
+
+		height : 100px
+
+		text-align : center
+
+		button
+			width : 100%
+			
+			&:active
+				margin-top : 4px
+
+		.status-indicator
+			position : absolute
+
+			right  : 2.5px
+			bottom : 2.5px
+			left   : 2.5px
+
+			height : 50px
+
+			background : no-repeat 50% 50%
+			background-size : contain
+
+			&.valid
+				background-image : url(/client/graphics/hud-indicator-valid.png)
+
+			&.invalid
+				background-image : url(/client/graphics/hud-indicator-invalid.png)
+
+	.units-case
+		position : absolute
+
+		overflow-y : scroll
+
+		right  : 5px
+		bottom : 5px
+		left   : 5px
+
+		height : 295px
+
+		border-radius: 5px
+
+		background : $white
+
+		box-shadow : 0 0 10px 0 black inset
+
+		img
+			padding : 2.5px
+
+			border-radius : 5px
+
+			&.selected
+				background : rgba(255, 237, 0, 0.4)
+
+.dialog
+	position : fixed
+
+	top : 50%
+
+	height : 400px
+	width  : 100%
+
+	z-index : $higher
+
+	margin : -200px 0
+	padding : 20px
+
+	box-sizing      : border-box
+	-moz-box-sizing : border-box
+
+	text-align : center
+
+	color : $white
+
+	font-family : $plain
+
+	background : $blue
+
+	box-shadow : 0 0 10px 0 black
+
+	-webkit-animation : appearing .25s 1 ease-out
+	-moz-animation    : appearing .25s 1 ease-out
+
+	&.big
+		top    : 10%
+		right  : 10%
+		bottom : 10%
+		left   : 10%
+
+		height : 80%
+		width  : 80%
+
+		margin : 0
+
+		section
+			width  : 100%
+			height : 80%
+
+	section
+		position : relative
+
+		overflow-y : scroll
+
+		width  : 25%
+		height : 50%
+
+		margin  : 10px auto
+
+		border-radius : 5px
+
+		color      : $blue
+		background : $white
+
+		table
+			width  : 100%
+			height : 100%
+
+			margin : 0 auto
+
+			background : $gray
+
+			tr
+				position : relative
+
+				width  : 100%
+
+				padding : 0
+				margin  : 0
+
+				text-align : left
+
+				background : $white
+
+				&.lack
+					color : $gray
+
+					background : $light
+
+					&:hover
+						background : $light
+
+						cursor : default
+
+				&:first-of-type
+					text-align : center
+
+					color : $white
+
+					background : $gray
+
+					&:hover
+						background : $gray
+
+						cursor : default
+
+				&:hover
+					cursor : pointer
+
+					background : $light
+
+				td
+					padding : 2.5%
+					margin  : 0
+
+					box-sizing      : border-box
+					-moz-box-sizing : border-box
+
+		.rank
+			display : inline-block
+
+			width  : 50%
+
+			padding : 10px 0 10px 10px
+			margin  : 0
+
+			box-sizing      : border-box
+			-moz-box-sizing : border-box
+
+		.quantity
+			display : inline-block
+
+			width : 50%
+
+			padding : 10px 10px 10px 0
+			margin  : 0
+
+			box-sizing      : border-box
+			-moz-box-sizing : border-box
+
+	h2
+		margin : 0
+
+		font-family : $super
+		font-size   : 40px
+
+		text-shadow : 0 0 2.5px $white
+
+		&.headerMessage
+			position : absolute
+
+			top : 120px
+
+			width  : 100%
+
+			margin : 0 auto
+
+	button
+		position : relative
+
+		bottom : 0
+
+		width  : 100px
+		height : 120px
+
+		margin      : 0
+		margin-left : 20px
+
+		border : none
+
+		vertical-align : text-bottom
+		line-height    : 12
+
+		font-size : 15px
+
+		color : $white
+
+		background-position :    50%    0
+		background-repeat   :   no-repeat
+		background-color    : transparent
+		background-size     :   80px 80px
+
+		&:hover
+			border : none
+
+			text-shadow : 0 0 2.5px $white
+
+		&.fight
+			background-image : url(/client/graphics/hud-button-fight.png)
+
+		&.close
+			background-image : url(/client/graphics/hud-button-close.png)
+
+		&.accept
+			background-image : url(/client/graphics/hud-button-accept.png)
+
+		&.reject
+			background-image : url(/client/graphics/hud-button-reject.png)
+
+	&.wait
+		background : #221b31 url(/client/graphics/ui-wait.gif) 50% 50% no-repeat

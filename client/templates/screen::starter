@@ -1,0 +1,15 @@
+<section class = "upper screen">
+	<button class = "signout">Sign out</button>
+
+	<section id = "selection" class = "hcolumn">
+		<p>Select from existing characters</p>
+
+		<button class = "deeper" id = "selection"></button>
+	</section>
+
+	<section id = "creation" class = "hcolumn">
+		<p>Create new character</p>
+
+		<button class = "deeper" id = "creation"></button>
+	</section>
+</section>

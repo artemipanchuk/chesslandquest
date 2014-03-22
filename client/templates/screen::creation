@@ -1,0 +1,15 @@
+<section class = "lower screen">
+	<button class = "back"></button>
+
+	<h2>Give details for new character</h2>
+
+	<section class = "pseudoform">
+		<label for = "formName">Name</label>
+
+		<input id = "formName">
+
+		<hr>
+
+		<button class = "submit" id = "creation">Submit</button>
+	</section>
+</section>

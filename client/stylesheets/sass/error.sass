@@ -1,0 +1,44 @@
+// ———————————————————————————————————————
+// Error
+// Contains rules for error pages
+// ———————————————————————————————————————
+
+@import "common"
+
+// ———————————————————————————————————————
+
+$image : url(/client/graphics/error-404.png)
+
+// ———————————————————————————————————————
+
+.picture
+	display  : block
+	position : absolute
+
+	width  : 233px
+	height : 243px
+
+	bottom : 120px
+	left   :  15px
+
+	text-align  : center
+
+.text
+	display  : block
+	position : absolute
+
+	width  : 450px
+	height : 50px
+
+	top   : 120px
+	right :  15px
+
+	font-family : $super
+	font-size   : 60px
+	font-weight : bold
+
+	color : $blue
+
+.picture404
+	background      : transparent $image 50% 50% no-repeat
+	background-size : 100%
